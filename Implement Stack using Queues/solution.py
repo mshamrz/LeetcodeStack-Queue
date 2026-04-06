@@ -1,18 +1,35 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 class Queue:
     def __init__(self):
-        self.data = []
+        self._head = None
+        self._tail = None
+        self._size = 0
     def push(self, x):
-        self.data.append(x)
+        node = Node(x)
+        if self._tail is None:
+            self._head = self._tail = node
+        else:
+            self._tail.next = node
+            self._tail = node
+        self._size += 1
     def pop(self):
         if self.empty():
             raise IndexError('pop from empty queue')
-        return self.data.pop(0)
+        value = self._head.data
+        self._head = self._head.next
+        if self._head is None:
+            self._tail = None
+        self._size -= 1
+        return value
     def peek(self):
         if self.empty():
             raise IndexError('peek from empty queue')
-        return self.data[0]
+        return self._head.data
     def empty(self):
-        return len(self.data) == 0
+        return self._head is None
 
 class MyStack:
     def __init__(self):
@@ -34,10 +51,5 @@ class MyStack:
     def empty(self) -> bool:
         return self.queue1.empty()
 
-
-# Your MyStack object will be instantiated and called as such:
-# obj = MyStack()
-# obj.push(x)
-# param_2 = obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.empty()
