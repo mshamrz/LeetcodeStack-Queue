@@ -1,20 +1,31 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 class Stack:
     def __init__(self):
-        self.data = []
+        self._head = None
+        self._size = 0
     def push(self, data):
-        self.data.append(data)
+        node = Node(data)
+        node.next = self._head
+        self._head = node
+        self._size += 1
     def pop(self):
         if self.is_empty():
             raise IndexError("pop from empty stack")
-        return self.data.pop()
+        value = self._head.data
+        self._head = self._head.next
+        self._size -= 1
+        return value
     def is_empty(self):
-        return len(self.data) == 0
+        return self._head is None
     def peek(self):
         if self.is_empty():
             raise IndexError('peek from empty stack')
-        return self.data[-1]
+        return self._head.data
     def size(self):
-        return len(self.data)
+        return self._size
 
 class MyQueue:
     def __init__(self):
